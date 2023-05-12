@@ -9,7 +9,7 @@ Below is an overview of the EcoJs functionality.
 - ##### Deposit Ether Into EcoBlock
 
 ```ts
-import { getL2Network, EthBridger } from 'ecojs'
+import { getL2Network, EthBridger } from '@ecoblocklabs/ecojs'
 
 const l2Network = await getL2Network(
   l2ChainID /** <-- chain id of target EcoBlock chain */
@@ -30,7 +30,7 @@ const ethDepositTxReceipt = await ethDepositTxResponse.wait()
 - ##### Redeem an L1 to L2 Message
 
 ```ts
-import { L1TransactionReceipt, L1ToL2MessageStatus } from 'ecojs'
+import { L1TransactionReceipt, L1ToL2MessageStatus } from '@ecoblocklabs/ecojs'
 
 const l1TxnReceipt = new L1TransactionReceipt(
   txnReceipt /** <-- ethers-js TransactionReceipt of an ethereum tx that triggered an L1 to L2 message (say depositting a token via a bridge)  */
@@ -56,7 +56,7 @@ if (res.status === L1ToL2MessageStatus.FUNDS_DEPOSITED_ON_L2) {
 - ##### Check if sequencer has included a transaction in L1 data
 
 ```ts
-import { L2TransactionReceipt } from 'ecojs'
+import { L2TransactionReceipt } from '@ecoblocklabs/ecojs'
 
 const l2TxnReceipt = new L2TransactionReceipt(
   txnReceipt /** <-- ethers-js TransactionReceipt of an EcoBlock tx */
