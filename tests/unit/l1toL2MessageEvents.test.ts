@@ -175,7 +175,7 @@ describe('L1toL2Message events', () => {
 
     expect(isClassic, 'incorrect tx type returned by isClassic call').to.be
       .false
-    expect(msg.chainId, 'incorrect chain id').to.be.eq(42161)
+    expect(msg.chainId, 'incorrect chain id').to.be.eq(620)
     expect(msg.sender, 'incorrect sender').to.be.eq(
       '0xeA3123E9d9911199a6711321d1277285e6d4F3EC'
     )

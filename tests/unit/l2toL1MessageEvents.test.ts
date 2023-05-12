@@ -34,7 +34,7 @@ describe('L2ToL1Message events', () => {
   const arbSys = '0x0000000000000000000000000000000000000064'
 
   const createProviderMock = async (networkChoiceOverride?: number) => {
-    const l2Network = await getL2Network(networkChoiceOverride || 42161)
+    const l2Network = await getL2Network(networkChoiceOverride || 620)
 
     const l2ProviderMock = mock(providers.JsonRpcProvider)
     const latestBlock = l2Network.nitroGenesisBlock + 1000
@@ -190,7 +190,7 @@ describe('L2ToL1Message events', () => {
   })
 
   it('doesnt call classic when nitro genesis is 0', async () => {
-    const { l2Provider, l2ProviderMock } = await createProviderMock(421613)
+    const { l2Provider, l2ProviderMock } = await createProviderMock(621)
     const fromBlock = 'earliest'
     const toBlock = 'latest'
 

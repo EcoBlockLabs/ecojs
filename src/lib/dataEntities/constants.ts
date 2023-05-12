@@ -45,6 +45,6 @@ export const DISABLED_GATEWAY = '0x0000000000000000000000000000000000000001'
  * If a custom token is enabled for arbitrum it will implement a function called
  * isArbitrumEnabled which returns this value. Intger: 0xa4b1
  */
-export const CUSTOM_TOKEN_IS_ENABLED = 42161
+export const CUSTOM_TOKEN_IS_ENABLED = 620
 
 export const SEVEN_DAYS_IN_SECONDS = 7 * 24 * 60 * 60

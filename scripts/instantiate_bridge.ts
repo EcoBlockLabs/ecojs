@@ -37,7 +37,7 @@ dotenv.config()
 const arbKey = process.env['ARB_KEY'] as string
 const ethKey = process.env['ETH_KEY'] as string
 
-const defaultNetworkId = 421613
+const defaultNetworkId = 620
 
 export const instantiateBridge = (
   l1PkParam?: string,
@@ -86,26 +86,8 @@ export const instantiateBridge = (
     )
   }
 
-  const l1Rpc = (() => {
-    if (l2NetworkID === 42161) return process.env['MAINNET_RPC'] as string
-    if (l2NetworkID === 421613) return process.env['GOERLI_RPC'] as string
-    if (l2NetworkID === 1338) return 'http://127.0.0.1:8545/'
-    throw new Error(
-      'L1 rpc url not set (see .env.sample or networks.ts) or chain id not supported'
-    )
-  })()
-  const l2Rpc = (() => {
-    if (l2NetworkID === 42161)
-      return process.env['ARB_ONE_RPC'] || 'https://arb1.arbitrum.io/rpc'
-    if (l2NetworkID === 421613)
-      return (
-        process.env['GOERLI_ROLLUP_TESTNET_RPC'] ||
-        'https://goerli-rollup.arbitrum.io/rpc'
-      )
-    throw new Error(
-      'L2 rpc url not set (see .env.sample or networks.ts) or chain id not supported'
-    )
-  })()
+  const l1Rpc = l1Network.rpcUrl
+  const l2Rpc = l2Network.rpcUrl
 
   const ethProvider = new JsonRpcProvider(l1Rpc)
   const arbProvider = new JsonRpcProvider(l2Rpc)

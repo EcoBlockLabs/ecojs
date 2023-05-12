@@ -64,7 +64,7 @@ describe('Inbox tools', () => {
     const signer = signers[0]
     const provider = signer.provider!
 
-    const arbitrumOne = await getL2Network(42161)
+    const arbitrumOne = await getL2Network(620)
 
     const sequencerInbox = SequencerInbox__factory.connect(
       arbitrumOne.ethBridge.sequencerInbox,

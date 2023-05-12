@@ -9,11 +9,11 @@ const indexIntroContents = `---
 sidebar_position: 1
 ---
 
-# Arbitrum SDK
+# EcoBlock Javascript SDK
 
-[Arbitrum SDK](https://github.com/OffchainLabs/arbitrum-sdk) is a typescript library for client-side interactions with Arbitrum. It provides common helper functionality as well as access to the underlying smart contract interfaces.
+[EcoBlock Javascript SDK](https://github.com/EcoBlockLabs/ecojs) is a typescript library for client-side interactions with EcoBlock. It provides common helper functionality as well as access to the underlying smart contract interfaces.
         
-Below is a list of modules of the library. See the [tutorials](https://github.com/OffchainLabs/arbitrum-tutorials) for further examples of how to use these classes.
+Below is a list of modules of the library.
 `
 
 // Traverse all typedoc generated md files

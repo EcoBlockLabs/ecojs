@@ -1,14 +1,14 @@
 {
-  "name": "@arbitrum/sdk",
-  "version": "3.1.3",
-  "description": "Typescript library client-side interactions with Arbitrum",
-  "author": "Offchain Labs, Inc.",
+  "name": "ecojs",
+  "version": "1.0.0",
+  "description": "Typescript library client-side interactions with Ecoblock",
+  "author": "Ecoblock Labs",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/offchainlabs/arbitrum-sdk.git"
+    "url": "git+https://github.com/EcoBlockLabs/ecojs.git"
   },
   "engines": {
     "node": ">=v11",
@@ -16,9 +16,9 @@
     "yarn": ">= 1.0.0"
   },
   "bugs": {
-    "url": "https://github.com/offchainlabs/arbitrum-sdk/issues"
+    "url": "https://github.com/EcoBlockLabs/ecojs/issues"
   },
-  "homepage": "https://offchainlabs.com",
+  "homepage": "https://ecoblock.tech",
   "scripts": {
     "audit:ci": "audit-ci --config ./audit-ci.jsonc",
     "prepare": "yarn run gen:abi",

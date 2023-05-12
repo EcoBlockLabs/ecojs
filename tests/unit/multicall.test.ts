@@ -9,7 +9,7 @@ import { MultiCaller } from '../../src'
 
 describe('Multicall', () => {
   const createProviderMock = async (networkChoiceOverride?: number) => {
-    const l2Network = await getL2Network(networkChoiceOverride || 42161)
+    const l2Network = await getL2Network(networkChoiceOverride || 620)
 
     const l2ProviderMock = mock(providers.JsonRpcProvider)
     const latestBlock = l2Network.nitroGenesisBlock + 1000
@@ -63,7 +63,7 @@ describe('Multicall', () => {
   }
 
   it('returns parsed data from bytes32', async function () {
-    const { l2Provider } = await createProviderMock(421613)
+    const { l2Provider } = await createProviderMock(621)
     const multicaller = await MultiCaller.fromProvider(l2Provider)
     const [data] = await multicaller.getTokenData(
       // Maker mainnet address
@@ -80,7 +80,7 @@ describe('Multicall', () => {
   })
 
   it('returns parsed data from byte string', async function () {
-    const { l2Provider } = await createProviderMock(421613)
+    const { l2Provider } = await createProviderMock(621)
     const multicaller = await MultiCaller.fromProvider(l2Provider)
     const [data] = await multicaller.getTokenData(
       // Uniswap mainnet address

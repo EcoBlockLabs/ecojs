@@ -1,18 +1,18 @@
-# Arbitrum SDK
+# EcoBlock Javascript SDK
 
-Typescript library for client-side interactions with Arbitrum. Arbitrum SDK provides common helper functionaliy as well access to the underlying smart contract interfaces.
+[EcoBlock Javascript SDK](https://github.com/EcoBlockLabs/ecojs) or `EcoJs` is a typescript library for client-side interactions with EcoBlock. It provides common helper functionality as well as access to the underlying smart contract interfaces.
 
-Below is an overview of the Arbitrum SDK functionality. See the [tutorials](https://github.com/OffchainLabs/arbitrum-tutorials) for further examples of how to use these classes.
+Below is an overview of the EcoJs functionality.
 
 ### Quickstart Recipes
 
-- ##### Deposit Ether Into Arbitrum
+- ##### Deposit Ether Into EcoBlock
 
 ```ts
-import { getL2Network, EthBridger } from '@arbitrum/sdk'
+import { getL2Network, EthBridger } from 'ecojs'
 
 const l2Network = await getL2Network(
-  l2ChainID /** <-- chain id of target Arbitrum chain */
+  l2ChainID /** <-- chain id of target EcoBlock chain */
 )
 const ethBridger = new EthBridger(l2Network)
 
@@ -30,7 +30,7 @@ const ethDepositTxReceipt = await ethDepositTxResponse.wait()
 - ##### Redeem an L1 to L2 Message
 
 ```ts
-import { L1TransactionReceipt, L1ToL2MessageStatus } from '@arbitrum/sdk'
+import { L1TransactionReceipt, L1ToL2MessageStatus } from 'ecojs'
 
 const l1TxnReceipt = new L1TransactionReceipt(
   txnReceipt /** <-- ethers-js TransactionReceipt of an ethereum tx that triggered an L1 to L2 message (say depositting a token via a bridge)  */
@@ -56,10 +56,10 @@ if (res.status === L1ToL2MessageStatus.FUNDS_DEPOSITED_ON_L2) {
 - ##### Check if sequencer has included a transaction in L1 data
 
 ```ts
-import { L2TransactionReceipt } from '@arbitrum/sdk'
+import { L2TransactionReceipt } from 'ecojs'
 
 const l2TxnReceipt = new L2TransactionReceipt(
-  txnReceipt /** <-- ethers-js TransactionReceipt of an arbitrum tx */
+  txnReceipt /** <-- ethers-js TransactionReceipt of an EcoBlock tx */
 )
 
 /** Wait 3 minutes: */
@@ -71,12 +71,12 @@ const dataIsOnL1 = await l2TxnReceipt.isDataAvailable(l2Provider, l1Provider)
 
 ### Bridging assets
 
-Arbitrum SDK can be used to bridge assets to/from the rollup chain.The following asset bridgers are currently available:
+EcoJs can be used to bridge assets to/from the rollup chain. The following asset bridges are currently available:
 
 - EthBridger
 - Erc20Bridger
 
-All asset bridgers have the following methods:
+All asset bridges have the following methods:
 
 - **deposit** - moves assets from the L1 to the L2
 - **depositEstimateGas** - estimates the gas required to do the deposit
@@ -90,17 +90,17 @@ When assets are moved by the L1 and L2 cross chain messages are sent. The lifecy
 
 ### Networks
 
-Arbitrum SDK comes pre-configured for Mainnet and Goerli, and their Arbitrum counterparts. However, the networks functionality can be used to register networks for custom Arbitrum instances. Most of the classes in Arbitrum SDK depend on network objects so this must be configured before using other Arbitrum SDK functionality.
+EcoJs comes pre-configured for Ethereum Mainnet and Sepolia Testnet, and their EcoBlock counterparts. However, the networks functionality can be used to register networks for custom EcoBlock instances. Most of the classes in EcoJs depend on network objects so this must be configured before using other EcoJs functionality.
 
 ### Inbox tools
 
-As part of normal operation the Arbitrum sequencer will messages into the rollup chain. However, if the sequencer is unavailable and not posting batches, the inbox tools can be used to force the inclusion of transactions into the rollup chain.
+As part of normal operation the EcoBlock sequencer will messages into the rollup chain. However, if the sequencer is unavailable and not posting batches, the inbox tools can be used to force the inclusion of transactions into the rollup chain.
 
 ### Utils
 
 - **EventFetcher** - A utility to provide typing for the fetching of events
 - **MultiCaller** - A utility for executing multiple calls as part of a single RPC request. This can be useful for reducing round trips.
-- **constants** - A list of useful Arbitrum related constants
+- **constants** - A list of useful EcoBlock related constants
 
 ### Run Integration tests
 
@@ -110,22 +110,22 @@ As part of normal operation the Arbitrum sequencer will messages into the rollup
 
 3. Once done, finally run `yarn test:integration` to run the integration tests.
 
-Defaults to `Arbitrum Goerli`, for custom network use `--network` flag.
+Defaults to `EcoBlock Sepoia`, for custom network use `--network` flag.
 
-`Arbitrum Goerli` expects env var `ARB_KEY` to be prefunded with at least 0.02 ETH, and env var `INFURA_KEY` to be set.
+`EcoBlock Sepolia` expects env var `ARB_KEY` to be prefunded with at least 0.02 ETH, and env var `INFURA_KEY` to be set.
 (see `integration_test/config.ts`)
 
 ### Bridge A Standard Token
 
 Bridging new a token to L2 (i.e., deploying a new token contract) through the standard gateway is done by simply depositing a token that hasn't yet been bridged. This repo includes a script to trigger this initial deposit/deployment:
 
-1. clone `arbitrum-sdk`
+1. clone `ecojs` repository
 
 2. `yarn install` (from root)
 
 3. Set `PRIVKEY` environmental variable (you can use .env) to the key of the account from which you'll be deploying (account should have some balance of the token you're bridging).
 
-4. Set MAINNET_RPC environmental variable to L1 RPC endpoint (i.e., https://mainnet.infura.io/v3/my-infura-key)
+4. Set `L1_MAINNET_RPC_URL` environmental variable to L1 RPC endpoint (i.e., https://mainnet.infura.io/v3/my-infura-key)
 
 5. `yarn bridgeStandardToken`
 

@@ -17,7 +17,7 @@
 'use strict'
 
 import { SignerOrProvider, SignerProviderUtils } from './signerOrProvider'
-import { ArbSdkError } from '../dataEntities/errors'
+import { ArbSdkError } from './errors'
 import { SEVEN_DAYS_IN_SECONDS } from './constants'
 
 export interface L1Network extends Network {
@@ -44,6 +44,7 @@ export interface Network {
   chainID: number
   name: string
   explorerUrl: string
+  rpcUrl: string
   gif?: string
   isCustom: boolean
 }
@@ -84,140 +85,52 @@ export interface L2Networks {
   [id: string]: L2Network
 }
 
-const mainnetTokenBridge: TokenBridge = {
-  l1GatewayRouter: '0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef',
-  l2GatewayRouter: '0x5288c571Fd7aD117beA99bF60FE0846C4E84F933',
-  l1ERC20Gateway: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
-  l2ERC20Gateway: '0x09e9222E96E7B4AE2a407B98d48e330053351EEe',
-  l1CustomGateway: '0xcEe284F754E854890e311e3280b767F80797180d',
-  l2CustomGateway: '0x096760F208390250649E3e8763348E783AEF5562',
-  l1WethGateway: '0xd92023E9d9911199a6711321D1277285e6d4e2db',
-  l2WethGateway: '0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B',
-  l2Weth: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
-  l1Weth: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-  l1ProxyAdmin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-  l2ProxyAdmin: '0xd570aCE65C43af47101fC6250FD6fC63D1c22a86',
-  l1MultiCall: '0x5ba1e12693dc8f9c48aad8770482f4739beed696',
-  l2Multicall: '0x842eC2c7D803033Edf55E478F461FC547Bc54EB2',
-}
-
-const mainnetETHBridge: EthBridge = {
-  bridge: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
-  inbox: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
-  sequencerInbox: '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
-  outbox: '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
-  rollup: '0x5eF0D09d1E6204141B4d37530808eD19f60FBa35',
-  classicOutboxes: {
-    '0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a': 0,
-    '0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40': 30,
-  },
-}
-
 export const l1Networks: L1Networks = {
   1: {
     chainID: 1,
     name: 'Mainnet',
     explorerUrl: 'https://etherscan.io',
-    partnerChainIDs: [42161, 42170],
+    rpcUrl: process.env['L1_MAINNET_RPC_URL']
+      ? process.env['L1_MAINNET_RPC_URL']
+      : 'https://rpc.ankr.com/eth',
+    partnerChainIDs: [620],
     blockTime: 14,
     isCustom: false,
     isArbitrum: false,
   },
-  1338: {
-    chainID: 1338,
-    name: 'Hardhat_Mainnet_Fork',
-    explorerUrl: 'https://etherscan.io',
-    partnerChainIDs: [42161],
-    blockTime: 1,
+  11155111: {
+    blockTime: 12,
+    chainID: 11155111,
+    explorerUrl: 'https://sepolia.etherscan.io',
+    rpcUrl: process.env['L1_SEPOLIA_RPC_URL']
+      ? process.env['L1_SEPOLIA_RPC_URL']
+      : 'https://rpc.sepolia.org',
     isCustom: false,
-    isArbitrum: false,
-  },
-  5: {
-    blockTime: 15,
-    chainID: 5,
-    explorerUrl: 'https://goerli.etherscan.io',
-    isCustom: false,
-    name: 'Goerli',
-    partnerChainIDs: [421613],
+    name: 'Sepolia',
+    partnerChainIDs: [621],
     isArbitrum: false,
   },
 }
 
 export const l2Networks: L2Networks = {
-  42161: {
-    chainID: 42161,
-    name: 'Arbitrum One',
-    explorerUrl: 'https://arbiscan.io',
-    partnerChainID: 1,
-    isArbitrum: true,
-    tokenBridge: mainnetTokenBridge,
-    ethBridge: mainnetETHBridge,
-    confirmPeriodBlocks: 45818,
-    isCustom: false,
-    retryableLifetimeSeconds: SEVEN_DAYS_IN_SECONDS,
-    nitroGenesisBlock: 22207817,
-    nitroGenesisL1Block: 15447158,
-    /**
-     * Finalisation on mainnet can be up to 2 epochs = 64 blocks on mainnet
-     * We add 10 minutes for the system to create and redeem the ticket, plus some extra buffer of time
-     * (Total timeout: 30 minutes)
-     */
-    depositTimeout: 1800000,
-  },
-  421613: {
-    chainID: 421613,
-    confirmPeriodBlocks: 960,
-    retryableLifetimeSeconds: SEVEN_DAYS_IN_SECONDS,
+  620: {
+    chainID: 620,
+    confirmPeriodBlocks: 0,
+    // Todo update when mainnet golive
     ethBridge: {
-      bridge: '0xaf4159a80b6cc41ed517db1c453d1ef5c2e4db72',
-      inbox: '0x6BEbC4925716945D46F0Ec336D5C2564F419682C',
-      outbox: '0x45Af9Ed1D03703e480CE7d328fB684bb67DA5049',
-      rollup: '0x45e5cAea8768F42B385A366D3551Ad1e0cbFAb17',
-      sequencerInbox: '0x0484A87B144745A2E5b7c359552119B6EA2917A9',
+      bridge: '',
+      inbox: '',
+      outbox: '',
+      rollup: '',
+      sequencerInbox: '',
     },
-    explorerUrl: 'https://goerli.arbiscan.io',
+    explorerUrl: 'https://ecoscan.io',
+    rpcUrl: process.env['L2_ECOBLOCK_MAINNET_RPC_URL']
+      ? process.env['L2_ECOBLOCK_MAINNET_RPC_URL']
+      : 'https://rpc.ecoblock.tech',
     isArbitrum: true,
     isCustom: false,
-    name: 'Arbitrum Rollup Goerli Testnet',
-    partnerChainID: 5,
-    tokenBridge: {
-      l1CustomGateway: '0x9fDD1C4E4AA24EEc1d913FABea925594a20d43C7',
-      l1ERC20Gateway: '0x715D99480b77A8d9D603638e593a539E21345FdF',
-      l1GatewayRouter: '0x4c7708168395aEa569453Fc36862D2ffcDaC588c',
-      l1MultiCall: '0xa0A8537a683B49ba4bbE23883d984d4684e0acdD',
-      l1ProxyAdmin: '0x16101A84B00344221E2983190718bFAba30D9CeE',
-      l1Weth: '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
-      l1WethGateway: '0x6e244cD02BBB8a6dbd7F626f05B2ef82151Ab502',
-      l2CustomGateway: '0x8b6990830cF135318f75182487A4D7698549C717',
-      l2ERC20Gateway: '0x2eC7Bc552CE8E51f098325D2FcF0d3b9d3d2A9a2',
-      l2GatewayRouter: '0xE5B9d8d42d656d1DcB8065A6c012FE3780246041',
-      l2Multicall: '0x108B25170319f38DbED14cA9716C54E5D1FF4623',
-      l2ProxyAdmin: '0xeC377B42712608B0356CC54Da81B2be1A4982bAb',
-      l2Weth: '0xe39Ab88f8A4777030A534146A9Ca3B52bd5D43A3',
-      l2WethGateway: '0xf9F2e89c8347BD96742Cc07095dee490e64301d6',
-    },
-    nitroGenesisBlock: 0,
-    nitroGenesisL1Block: 0,
-    /**
-     * Low validator participation on goerli means that it can take a long time to finalise
-     * Wait 10 epochs there on goerli = 320 blocks. Each block is 12 seconds.
-     */
-    depositTimeout: 3960000,
-  },
-  42170: {
-    chainID: 42170,
-    confirmPeriodBlocks: 45818,
-    ethBridge: {
-      bridge: '0xc1ebd02f738644983b6c4b2d440b8e77dde276bd',
-      inbox: '0xc4448b71118c9071bcb9734a0eac55d18a153949',
-      outbox: '0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58',
-      rollup: '0xfb209827c58283535b744575e11953dcc4bead88',
-      sequencerInbox: '0x211e1c4c7f1bf5351ac850ed10fd68cffcf6c21b',
-    },
-    explorerUrl: 'https://nova.arbiscan.io',
-    isArbitrum: true,
-    isCustom: false,
-    name: 'Arbitrum Nova',
+    name: 'EcoBlock',
     partnerChainID: 1,
     retryableLifetimeSeconds: SEVEN_DAYS_IN_SECONDS,
     tokenBridge: {
@@ -235,6 +148,51 @@ export const l2Networks: L2Networks = {
       l2ProxyAdmin: '0xada790b026097BfB36a5ed696859b97a96CEd92C',
       l2Weth: '0x722E8BdD2ce80A4422E880164f2079488e115365',
       l2WethGateway: '0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD',
+    },
+    nitroGenesisBlock: 0,
+    nitroGenesisL1Block: 0,
+    /**
+     * Finalisation on mainnet can be up to 2 epochs = 64 blocks on mainnet
+     * We add 10 minutes for the system to create and redeem the ticket, plus some extra buffer of time
+     * (Total timeout: 30 minutes)
+     */
+    depositTimeout: 1800000,
+  },
+  621: {
+    chainID: 621,
+    confirmPeriodBlocks: 0,
+    ethBridge: {
+      bridge: '0x043d53d7883f81c947963f11d25130b97061c22a',
+      inbox: '0xe44f80a5d59975e058b33cd62569b4ae2cbe30e1',
+      outbox: '0xd7560ec4ec67350830222c616f590cb3efce2347', // in the internal tx of createRollup tx
+      rollup: '0x8da4f0c8e6ffb168a6e9ae75af2866a9d24ae30c',
+      sequencerInbox: '0xc5eca22b8f79a11bde3f304021b7e6abbf60f851',
+    },
+    explorerUrl: 'https://testnet.ecoscan.io',
+    rpcUrl: process.env['L2_ECOBLOCK_TESTNET_RPC_URL']
+      ? process.env['L2_ECOBLOCK_TESTNET_RPC_URL']
+      : 'https://rpc.ecoblock.tech',
+    isArbitrum: true,
+    isCustom: false,
+    name: 'EcoBlock Testnet',
+    partnerChainID: 11155111,
+    retryableLifetimeSeconds: SEVEN_DAYS_IN_SECONDS,
+    // Todo update when token bridge ready
+    tokenBridge: {
+      l1CustomGateway: '',
+      l1ERC20Gateway: '',
+      l1GatewayRouter: '',
+      l1MultiCall: '',
+      l1ProxyAdmin: '',
+      l1Weth: '',
+      l1WethGateway: '',
+      l2CustomGateway: '',
+      l2ERC20Gateway: '',
+      l2GatewayRouter: '',
+      l2Multicall: '',
+      l2ProxyAdmin: '',
+      l2Weth: '',
+      l2WethGateway: '',
     },
     nitroGenesisBlock: 0,
     nitroGenesisL1Block: 0,
@@ -337,6 +295,7 @@ export const addDefaultLocalNetwork = (): {
     blockTime: 10,
     chainID: 1337,
     explorerUrl: '',
+    rpcUrl: '',
     isCustom: true,
     name: 'EthLocal',
     partnerChainIDs: [412346],
@@ -354,6 +313,7 @@ export const addDefaultLocalNetwork = (): {
       sequencerInbox: '0xe7362d0787b51d8c72d504803e5b1d6dcda89540',
     },
     explorerUrl: '',
+    rpcUrl: '',
     isArbitrum: true,
     isCustom: true,
     name: 'ArbLocal',
