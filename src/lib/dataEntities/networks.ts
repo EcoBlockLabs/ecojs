@@ -115,7 +115,7 @@ export const l1Networks: L1Networks = {
 export const l2Networks: L2Networks = {
   620: {
     chainID: 620,
-    confirmPeriodBlocks: 0,
+    confirmPeriodBlocks: 20, //TODO update this corresponding when init RollupProxy
     // Todo update when mainnet golive
     ethBridge: {
       bridge: '',
@@ -160,7 +160,7 @@ export const l2Networks: L2Networks = {
   },
   621: {
     chainID: 621,
-    confirmPeriodBlocks: 0,
+    confirmPeriodBlocks: 20,
     ethBridge: {
       bridge: '0x043d53d7883f81c947963f11d25130b97061c22a',
       inbox: '0xe44f80a5d59975e058b33cd62569b4ae2cbe30e1',
