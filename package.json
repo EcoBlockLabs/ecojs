@@ -1,6 +1,6 @@
 {
   "name": "@ecoblocklabs/ecojs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Typescript library client-side interactions with EcoBlock",
   "author": "EcoblockLabs",
   "license": "Apache-2.0",
