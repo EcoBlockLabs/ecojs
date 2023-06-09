@@ -40,6 +40,7 @@ export interface L2Network extends Network {
    */
   depositTimeout: number
 }
+
 export interface Network {
   chainID: number
   name: string
@@ -110,6 +111,30 @@ export const l1Networks: L1Networks = {
     partnerChainIDs: [621],
     isArbitrum: false,
   },
+  56: {
+    blockTime: 3,
+    chainID: 56,
+    explorerUrl: 'https://bscscan.com',
+    rpcUrl: process.env['L1_BSC_MAINNET_RPC_URL']
+      ? process.env['L1_BSC_MAINNET_RPC_URL']
+      : 'https://bsc-dataseed1.binance.org',
+    isCustom: false,
+    name: 'Binance Smart Chain',
+    partnerChainIDs: [630],
+    isArbitrum: false,
+  },
+  97: {
+    blockTime: 3,
+    chainID: 97,
+    explorerUrl: 'https://testnet.bscscan.com',
+    rpcUrl: process.env['L1_BSC_TESTNET_RPC_URL']
+      ? process.env['L1_BSC_TESTNET_RPC_URL']
+      : 'https://data-seed-prebsc-1-s1.binance.org:8545',
+    isCustom: false,
+    name: 'Binance Smart Chain Testnet',
+    partnerChainIDs: [631],
+    isArbitrum: false,
+  },
 }
 
 export const l2Networks: L2Networks = {
@@ -130,24 +155,24 @@ export const l2Networks: L2Networks = {
       : 'https://rpc.ecoblock.tech',
     isArbitrum: true,
     isCustom: false,
-    name: 'EcoBlock',
+    name: 'EcoBlock Ethereum Mainnet',
     partnerChainID: 1,
     retryableLifetimeSeconds: SEVEN_DAYS_IN_SECONDS,
     tokenBridge: {
-      l1CustomGateway: '0x23122da8C581AA7E0d07A36Ff1f16F799650232f',
-      l1ERC20Gateway: '0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf',
-      l1GatewayRouter: '0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48',
-      l1MultiCall: '0x8896d23afea159a5e9b72c9eb3dc4e2684a38ea3',
-      l1ProxyAdmin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
-      l1Weth: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-      l1WethGateway: '0xE4E2121b479017955Be0b175305B35f312330BaE',
-      l2CustomGateway: '0xbf544970E6BD77b21C6492C281AB60d0770451F4',
-      l2ERC20Gateway: '0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257',
-      l2GatewayRouter: '0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8',
-      l2Multicall: '0x5e1eE626420A354BbC9a95FeA1BAd4492e3bcB86',
-      l2ProxyAdmin: '0xada790b026097BfB36a5ed696859b97a96CEd92C',
-      l2Weth: '0x722E8BdD2ce80A4422E880164f2079488e115365',
-      l2WethGateway: '0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD',
+      l1CustomGateway: '',
+      l1ERC20Gateway: '',
+      l1GatewayRouter: '',
+      l1MultiCall: '',
+      l1ProxyAdmin: '',
+      l1Weth: '',
+      l1WethGateway: '',
+      l2CustomGateway: '',
+      l2ERC20Gateway: '',
+      l2GatewayRouter: '',
+      l2Multicall: '',
+      l2ProxyAdmin: '',
+      l2Weth: '',
+      l2WethGateway: '',
     },
     nitroGenesisBlock: 0,
     nitroGenesisL1Block: 0,
@@ -174,8 +199,98 @@ export const l2Networks: L2Networks = {
       : 'https://rpc.ecoblock.tech',
     isArbitrum: true,
     isCustom: false,
-    name: 'EcoBlock Testnet',
+    name: 'EcoBlock Sepolia Testnet',
     partnerChainID: 11155111,
+    retryableLifetimeSeconds: SEVEN_DAYS_IN_SECONDS,
+    // Todo update when token bridge ready
+    tokenBridge: {
+      l1CustomGateway: '',
+      l1ERC20Gateway: '',
+      l1GatewayRouter: '',
+      l1MultiCall: '',
+      l1ProxyAdmin: '',
+      l1Weth: '',
+      l1WethGateway: '',
+      l2CustomGateway: '',
+      l2ERC20Gateway: '',
+      l2GatewayRouter: '',
+      l2Multicall: '',
+      l2ProxyAdmin: '',
+      l2Weth: '',
+      l2WethGateway: '',
+    },
+    nitroGenesisBlock: 0,
+    nitroGenesisL1Block: 0,
+    /**
+     * Finalisation on mainnet can be up to 2 epochs = 64 blocks on mainnet
+     * We add 10 minutes for the system to create and redeem the ticket, plus some extra buffer of time
+     * (Total timeout: 30 minutes)
+     */
+    depositTimeout: 1800000,
+  },
+  630: {
+    chainID: 630,
+    confirmPeriodBlocks: 20, //TODO update this corresponding when init RollupProxy
+    // Todo update when mainnet golive
+    ethBridge: {
+      bridge: '',
+      inbox: '',
+      outbox: '',
+      rollup: '',
+      sequencerInbox: '',
+    },
+    explorerUrl: 'https://ecoscan.io',
+    rpcUrl: process.env['L2_ECOBLOCK_MAINNET_RPC_URL']
+      ? process.env['L2_ECOBLOCK_MAINNET_RPC_URL']
+      : 'https://rpc.ecoblock.tech',
+    isArbitrum: true,
+    isCustom: false,
+    name: 'EcoBlock Mainnet',
+    partnerChainID: 1,
+    retryableLifetimeSeconds: SEVEN_DAYS_IN_SECONDS,
+    tokenBridge: {
+      l1CustomGateway: '',
+      l1ERC20Gateway: '',
+      l1GatewayRouter: '',
+      l1MultiCall: '',
+      l1ProxyAdmin: '',
+      l1Weth: '',
+      l1WethGateway: '',
+      l2CustomGateway: '',
+      l2ERC20Gateway: '',
+      l2GatewayRouter: '',
+      l2Multicall: '',
+      l2ProxyAdmin: '',
+      l2Weth: '',
+      l2WethGateway: '',
+    },
+    nitroGenesisBlock: 0,
+    nitroGenesisL1Block: 0,
+    /**
+     * Finalisation on mainnet can be up to 2 epochs = 64 blocks on mainnet
+     * We add 10 minutes for the system to create and redeem the ticket, plus some extra buffer of time
+     * (Total timeout: 30 minutes)
+     */
+    depositTimeout: 1800000,
+  },
+  631: {
+    chainID: 631,
+    confirmPeriodBlocks: 20,
+    ethBridge: {
+      bridge: '0xed16681b27f3239ef352f51fa5b03460b863c29f',
+      inbox: '0x812f40cc7b0fdaa7387de75368e175367e6fec56',
+      outbox: '0x04bf8e8aeb38139bd4ab88971ee44c0ddaa6cbe8', // in the internal tx of createRollup tx
+      rollup: '0x719adb12dbadc772b5160a5fbf32e398229c0939',
+      sequencerInbox: '0x70f3117c714c9e09c53db431afd10360a6c17a56',
+    },
+    explorerUrl: 'https://testnet.ecoscan.io',
+    rpcUrl: process.env['L2_ECOBLOCK_TESTNET_RPC_URL']
+      ? process.env['L2_ECOBLOCK_TESTNET_RPC_URL']
+      : 'https://rpc.ecoblock.tech',
+    isArbitrum: true,
+    isCustom: false,
+    name: 'EcoBlock Testnet',
+    partnerChainID: 97,
     retryableLifetimeSeconds: SEVEN_DAYS_IN_SECONDS,
     // Todo update when token bridge ready
     tokenBridge: {
