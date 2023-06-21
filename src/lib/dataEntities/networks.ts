@@ -140,14 +140,13 @@ export const l1Networks: L1Networks = {
 export const l2Networks: L2Networks = {
   620: {
     chainID: 620,
-    confirmPeriodBlocks: 20, //TODO update this corresponding when init RollupProxy
-    // Todo update when mainnet golive
+    confirmPeriodBlocks: 45818,
     ethBridge: {
-      bridge: '',
-      inbox: '',
-      outbox: '',
-      rollup: '',
-      sequencerInbox: '',
+      bridge: '0xb9a75d7a4eb3e1de05d49dcd3c08fe133b133639',
+      inbox: '0xd0ccd2309a79f4dc4178278bc86c2a51832b916f',
+      outbox: '0xf0b8b68f93998723968116a12e4e5a54b0e0819d',
+      rollup: '0x4698b00891820c79875bb2a8b8d4958d4b56a411',
+      sequencerInbox: '0x016aa34b40f06c88b9add1d4dba7754d0b9a17ea',
     },
     explorerUrl: 'https://ecoscan.io',
     rpcUrl: process.env['L2_ECOBLOCK_MAINNET_RPC_URL']
@@ -155,9 +154,10 @@ export const l2Networks: L2Networks = {
       : 'https://rpc.ecoblock.tech',
     isArbitrum: true,
     isCustom: false,
-    name: 'EcoBlock Ethereum Mainnet',
+    name: 'EcoBlock Mainnet',
     partnerChainID: 1,
     retryableLifetimeSeconds: SEVEN_DAYS_IN_SECONDS,
+    // Todo update when token bridge ready
     tokenBridge: {
       l1CustomGateway: '',
       l1ERC20Gateway: '',
