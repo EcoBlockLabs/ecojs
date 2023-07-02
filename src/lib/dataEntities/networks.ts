@@ -142,11 +142,11 @@ export const l2Networks: L2Networks = {
     chainID: 620,
     confirmPeriodBlocks: 45818,
     ethBridge: {
-      bridge: '0xb9a75d7a4eb3e1de05d49dcd3c08fe133b133639',
-      inbox: '0xd0ccd2309a79f4dc4178278bc86c2a51832b916f',
-      outbox: '0xf0b8b68f93998723968116a12e4e5a54b0e0819d',
-      rollup: '0x4698b00891820c79875bb2a8b8d4958d4b56a411',
-      sequencerInbox: '0x016aa34b40f06c88b9add1d4dba7754d0b9a17ea',
+      bridge: '0x7bebf467ecbfe4e70814e10622e20474216f6329',
+      inbox: '0x0a1a2b5e9e86f28ede54e1b3821496a61fcf06bc',
+      outbox: '0xa8c62f6e47d4d3013f0daadc4a5b74b87f53f583',
+      rollup: '0x84fe05f541cee93d0b02e03cd4319c29ba0030a2',
+      sequencerInbox: '0xe66a9277357f695b312e3d90045853e8b4b25e1b',
     },
     explorerUrl: 'https://ecoscan.io',
     rpcUrl: process.env['L2_ECOBLOCK_MAINNET_RPC_URL']
